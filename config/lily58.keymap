@@ -40,7 +40,6 @@
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
                                      &trans      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
             >;
-
             sensor-bindings = <
                 &inc_dec_kp C_VOL_UP C_VOL_DN
                 &inc_dec_kp C_NEXT C_PREV
@@ -61,13 +60,10 @@
 &kp CAPS  &kp Z        &kp X        &kp C       &kp V       &kp B   &kp C_PP   &kp C_MUTE   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
                                      &trans      &trans      &trans  &kp SPACE  &kp ENTER  &trans  &trans      &trans
             >;
-
-#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-#else
-            sensor-bindings = <&left_next_prev>;
-#endif
-        };
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN
+                &inc_dec_kp C_NEXT C_PREV
+            >;
 
         lower_layer {
 // ------------------------------------------------------------------------------------------------------------
