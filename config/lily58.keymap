@@ -44,7 +44,7 @@
                 &inc_dec_kp C_VOL_UP C_VOL_DN
                 &inc_dec_kp C_NEXT C_PREV
             >;
-        }
+        };
 
         function_layer {
 // ------------------------------------------------------------------------------------------------------------
@@ -62,10 +62,10 @@
                                      &trans      &trans      &trans  &kp SPACE  &kp ENTER  &trans  &trans      &trans
             >;
             sensor-bindings = <
-                &inc_dec_kp C_VOL_UP C_VOL_DN
                 &inc_dec_kp C_NEXT C_PREV
+                &inc_dec_kp C_VOL_UP C_VOL_DN
             >;
-        }
+        };
 
         lower_layer {
 // ------------------------------------------------------------------------------------------------------------
@@ -83,10 +83,10 @@
                                      &trans      &trans       &trans    &trans   &trans    &trans    &trans    &trans
             >;
             sensor-bindings = <
-                &inc_dec_kp C_VOL_UP C_VOL_DN
                 &inc_dec_kp C_NEXT C_PREV
+                &inc_dec_kp C_VOL_UP C_VOL_DN
             >;
-        }
+        };
 
         raise_layer {
 // ------------------------------------------------------------------------------------------------------------
@@ -104,10 +104,10 @@
                          &trans  &trans  &trans    &trans   &trans    &trans      &trans    &trans
             >;
             sensor-bindings = <
-                &inc_dec_kp C_VOL_UP C_VOL_DN
                 &inc_dec_kp C_NEXT C_PREV
+                &inc_dec_kp C_VOL_UP C_VOL_DN
             >;
-        }
+        };
 
         extra_1 {
             status = "reserved";
