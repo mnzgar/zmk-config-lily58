@@ -52,7 +52,7 @@
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
                                      &trans      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
             >;
-            #ifdef CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL
+            #ifdef CONFIG_ZMK_SPLIT_ROLE_CENTRAL
                 sensor-bindings = <&media_encoder>;
             #else
                 sensor-bindings = <&vol_encoder>;
