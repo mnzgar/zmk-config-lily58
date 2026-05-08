@@ -20,6 +20,18 @@
             quick-tap-ms = <200>;
             require-prior-idle-ms = <130>;
         };
+
+        vol_encoder: vol_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp C_VOL_UP>, <&kp C_VOL_DN>;
+        };
+
+        media_encoder: media_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp C_NEXT>, <&kp C_PREV>;
+        };
     };
 
     keymap {
@@ -40,10 +52,7 @@
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
                                      &trans      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
             >;
-            sensor-bindings = <
-                &inc_dec_kp C_VOL_UP C_VOL_DN
-                &inc_dec_kp C_NEXT C_PREV
-            >;
+            sensor-bindings = <&vol_encoder &media_encoder>;
         };
 
         function_layer {
