@@ -5,11 +5,29 @@
  */
 
 #include <behaviors.dtsi>
+#include <behaviors/mouse_move.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/ext_power.h>
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 30
+#include <dt-bindings/zmk/pointing.h>
 
 / {
+    behaviors {
+        rot_msc: sensor_rotate_msc {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+            tap-ms = <100>;
+        };
+
+        left_next_prev: left_next_prev {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp C_NEXT>, <&kp C_PREV>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -18,18 +36,22 @@
 // |       |  1  |  2  |  3   |  4  |  5  |                   |  6  |  7  |  8  | 9  | 0  |      |
 // |  TAB  |  Q  |  W  |  E   |  R  |  T  |                   |  Y  |  U  |  I  | O  | P  | BSPC |
 // │  ESC  │  A⇧ │  S⌃ │  D⌥  │  F⌘ │  G  │                   │  H  │  J⌘ │  K⌥ │ L⌃ │ Ñ⇧ │  '   │
-// | MAYUS |  Z  |  X  |  C   |  V  |  B  |  VOL  |  | SCROLL |  N  |  M  |  ,  | .  |    | TOG1 |
-//                     | TOG1 | MO4 | MO2 | SPACE |  | ENTER  | MO3 | MO5 |     |
+// | MAYUS |  Z  |  X  |  C   |  V  |  B  |  ▶⏸  |  | SCROLL |  N  |  M  |  ,  | .  |    | TOG1 |
+//                     | MO4 | TOG1 | MO2 | SPACE |  | ENTER  | MO3 | MO5 |     |
             display-name = "base";
             bindings = <
 &trans    &kp N1        &kp N2       &kp N3      &kp N4      &kp N5                         &kp N6  &kp N7      &kp N8      &kp N9       &kp N0          &trans
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                          &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
 &kp ESC   &mt LSHIFT A  &mt LCTRL S  &mt LALT D  &mt LGUI F  &kp G                          &kp H   &mt RGUI J  &mt RALT K  &mt RCTRL L  &mt RSHFT SEMI  &kp SQT
-&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
+&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_PP  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
+                                     &mo 4      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
             >;
 
+#ifdef CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL
+            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+#else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+#endif
         };
 
         function_layer {
@@ -37,18 +59,22 @@
 // |  F1   | F2  | F3  | F4 | F5  | F6  |                   | F7  | F8  | F9  | F10 | F11 | F12  |
 // |  TAB  |  Q  |  W  | E  |  R  |  T  |                   |  Y  |  U  |  I  |  O  |  P  | BSPC |
 // │  ESC  │  A⇧ │  S⌃ │ D⌥ │  F⌘ │  G  │                   │  H  │  J⌘ │  K⌥ │  L⌃ │  Ñ⇧ │  '   │
-// | MAYUS |  Z  |  X  | C  |  V  |  B  |  VOL  |  | SCROLL |  N  |  M  |  ,  |  .  |     | TOG1 |
-//                     |    | MO4 | MO2 | SPACE |  | ENTER  | MO3 | MO5 |     |
+// | MAYUS |  Z  |  X  | C  |  V  |  B  |  ▶⏸  |  | SCROLL |  N  |  M  |  ,  |  .  |     | TOG1 |
+//                     | MO4 |    | MO2 | SPACE |  | ENTER  | MO3 | MO5 |     |
             display-name = "func";
             bindings = <
 &kp F1    &kp F2       &kp F3       &kp F4      &kp F5      &kp F6                          &kp F7  &kp F8      &kp F9      &kp F10      &kp F11           &kp F12
 &kp TAB   &kp Q        &kp W        &kp E       &kp R       &kp T                          &kp Y   &kp U       &kp I       &kp O        &kp P             &kp BSPC
 &kp ESC   &kp A  &kp S  &kp D    &kp F    &kp G                      &kp H  &kp J    &kp K     &kp L   &kp SEMI &kp SQT
-&kp CAPS  &kp Z        &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans            &tog 1
-                                    &trans      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
+&kp CAPS  &kp Z        &kp X        &kp C       &kp V       &kp B   &kp C_PP  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans            &tog 1
+                                     &mo 4      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
             >;
 
+#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
+            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+#else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+#endif
         };
 
         lower_layer {
@@ -64,10 +90,14 @@
 &kp F1     &kp F2           &kp F3            &kp F4            &kp F5       &kp F6                       &kp F7    &kp F8    &kp F9          &kp F10   &kp F11   &kp F12
 &kp GRAVE  &kp EXCL         &kp AT            &kp HASH          &kp DOLLAR   &kp PRCNT                    &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR  &kp RPAR  &kp TILDE
 &trans     &trans           &trans            &trans            &trans       &trans    &trans   &trans    &trans    &kp MINUS &kp KP_PLUS     &kp LBRC  &kp RBRC  &kp PIPE
-                                              &trans            &trans       &trans    &trans   &trans    &trans    &trans    &trans
+                                     &mo 4      &trans       &trans    &trans   &trans    &trans    &trans    &trans
             >;
 
+#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
+            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+#else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+#endif
         };
 
         raise_layer {
@@ -83,14 +113,31 @@
 &kp GRAVE &kp N1 &kp N2 &kp N3  &kp N4  &kp N5                       &kp N6      &kp N7    &kp N8    &kp N9   &kp N0    &trans
 &kp F1    &kp F2 &kp F3 &kp F4  &kp F5  &kp F6                       &trans      &kp LEFT  &kp DOWN  &kp UP   &kp RIGHT &trans
 &kp F7    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &trans   &trans    &kp KP_PLUS &kp MINUS &kp EQUAL &kp LBKT &kp RBKT  &kp BSLH
-                        &trans  &trans  &trans    &trans   &trans    &trans      &trans    &trans
+                         &mo 4  &trans  &trans    &trans   &trans    &trans      &trans    &trans
             >;
 
+#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
+            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+#else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+#endif
         };
 
-        extra_1 {
-            status = "reserved";
+        media_layer {
+            display-name = "Media";
+            bindings = <
+&trans &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans   &trans   &trans    &trans &trans &trans &trans &trans &trans
+                              &trans &trans &trans &trans &trans &trans &trans &trans
+            >;
+
+#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
+            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+#else
+            sensor-bindings = <&left_next_prev>;
+#endif
         };
 
         extra_2 {
