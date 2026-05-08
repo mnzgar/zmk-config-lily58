@@ -1,0 +1,5 @@
+/ {
+    chosen {
+        zmk,sensors = &left_encoder &right_encoder;
+    };
+};
