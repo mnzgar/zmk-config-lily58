@@ -80,13 +80,10 @@
 &trans     &trans           &trans            &trans            &trans       &trans    &trans   &trans    &trans    &kp MINUS &kp KP_PLUS     &kp LBRC  &kp RBRC  &kp PIPE
                                      &trans      &trans       &trans    &trans   &trans    &trans    &trans    &trans
             >;
-
-#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-#else
-            sensor-bindings = <&left_next_prev>;
-#endif
-        };
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN
+                &inc_dec_kp C_NEXT C_PREV
+            >;
 
         raise_layer {
 // ------------------------------------------------------------------------------------------------------------
@@ -103,13 +100,10 @@
 &kp F7    &kp F8 &kp F9 &kp F10 &kp F11 &kp F12   &trans   &trans    &kp KP_PLUS &kp MINUS &kp EQUAL &kp LBKT &kp RBKT  &kp BSLH
                          &trans  &trans  &trans    &trans   &trans    &trans      &trans    &trans
             >;
-
-#if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-#else
-            sensor-bindings = <&left_next_prev>;
-#endif
-        };
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN
+                &inc_dec_kp C_NEXT C_PREV
+            >;
 
         extra_1 {
             status = "reserved";
