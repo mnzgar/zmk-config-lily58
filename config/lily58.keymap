@@ -53,8 +53,8 @@
 &trans    &kp N1        &kp N2       &kp N3      &kp N4      &kp N5                         &kp N6  &kp N7      &kp N8      &kp N9       &kp N0          &trans
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                          &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
 &kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                          &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
-&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_PP  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &mo 4      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
+&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_PP   &kp C_PP    &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
+                                     &mo 4       &trans      &trans  &kp SPACE  &kp ENTER   &trans  &trans      &trans
             >;
 
 #ifdef CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL
@@ -73,11 +73,11 @@
 //                     | MO4 |    | MO2 | SPACE |  | ENTER  | MO3 | MO5 |     |
             display-name = "func";
             bindings = <
-&kp F1    &kp F2       &kp F3       &kp F4      &kp F5      &kp F6                          &kp F7  &kp F8      &kp F9      &kp F10      &kp F11           &kp F12
-&kp TAB   &kp Q        &kp W        &kp E       &kp R       &kp T                          &kp Y   &kp U       &kp I       &kp O        &kp P             &kp BSPC
-&kp ESC   &kp A  &kp S  &kp D    &kp F    &kp G                      &kp H  &kp J    &kp K     &kp L   &kp SEMI &kp SQT
-&kp CAPS  &kp Z        &kp X        &kp C       &kp V       &kp B   &kp C_PP  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans            &tog 1
-                                     &mo 4      &trans      &trans  &kp SPACE   &kp ENTER  &trans  &trans      &trans
+&kp F1    &kp F2        &kp F3       &kp F4      &kp F5      &kp F6                        &kp F7  &kp F8      &kp F9      &kp F10      &kp F11         &kp F12
+&kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                         &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
+&kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                         &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
+&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_PP   &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
+                                     &mo 4       &trans      &trans  &kp SPACE  &kp ENTER  &trans  &trans      &trans
             >;
 
 #if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
