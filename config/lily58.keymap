@@ -15,10 +15,10 @@
 / {
     behaviors {
         rot_msc: sensor_rotate_msc {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
-            tap-ms = <100>;
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <200>;
         };
 
         left_next_prev: left_next_prev {
@@ -58,7 +58,7 @@
             >;
 
 #ifdef CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL
-            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&rot_msc>;
 #else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 #endif
@@ -81,7 +81,7 @@
             >;
 
 #if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&rot_msc>;
 #else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 #endif
@@ -104,7 +104,7 @@
             >;
 
 #if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&rot_msc>;
 #else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 #endif
@@ -127,7 +127,7 @@
             >;
 
 #if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&rot_msc>;
 #else
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 #endif
@@ -144,7 +144,7 @@
             >;
 
 #if defined(CONFIG_ZMK_SPLIT_BLE_ROLE_PERIPHERAL)
-            sensor-bindings = <&rot_msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&rot_msc>;
 #else
             sensor-bindings = <&left_next_prev>;
 #endif
