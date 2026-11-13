@@ -1,0 +1,49 @@
+/*
+ * Configuración del segundo encoder (mitad derecha).
+ *
+ * OJO: este fichero se incluye desde `lily58.keymap`, no desde los overlays.
+ * ZMK aplica `config/<shield>.overlay` ANTES que los ficheros del shield, así
+ * que en los overlays todavía no existen ni `left_encoder` ni `sensors`.
+ * El keymap, en cambio, se aplica el último, y ahí sí se pueden usar.
+ *
+ * Pines por defecto: los mismos pads que el encoder izquierdo del shield
+ * (`&pro_micro 20` / `&pro_micro 21`), pero con A/B intercambiados porque la
+ * mitad derecha está espejada. Es la combinación que usan las Lily58 con
+ * footprint de encoder en las dos mitades.
+ *
+ * Alternativas habituales si el encoder derecho no responde:
+ *   - D0 / D1 -> &pro_micro 0 / &pro_micro 1
+ *   - F4 / D4 -> &pro_micro 21 / &pro_micro 4
+ * Descomenta el bloque correspondiente y comenta el de arriba.
+ */
+
+/ {
+    right_encoder: encoder_right {
+        compatible = "alps,ec11";
+
+        a-gpios = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+
+        /* Alternativa: D0 / D1 */
+        /* a-gpios = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; */
+        /* b-gpios = <&pro_micro 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; */
+
+        /* Alternativa: F4 / D4 */
+        /* a-gpios = <&pro_micro 21 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; */
+        /* b-gpios = <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; */
+
+        steps = <80>;
+    };
+};
+
+/*
+ * El orden de esta lista fija el índice de cada encoder en `sensor-bindings`:
+ *   0 -> left_encoder  (shield, mitad izquierda)
+ *   1 -> right_encoder (este fichero, mitad derecha)
+ * Cada mitad desactiva el encoder que no le corresponde en su overlay, pero
+ * los dos siguen en la lista para que los índices coincidan en ambas.
+ */
+&sensors {
+    sensors = <&left_encoder &right_encoder>;
+    triggers-per-rotation = <20>;
+};

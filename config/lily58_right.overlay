@@ -1,0 +1,22 @@
+/*
+ * Mitad derecha.
+ *
+ * ZMK aplica este overlay ANTES que los ficheros del shield, así que aquí no
+ * se pueden usar etiquetas como `&left_encoder`; se referencian los nodos por
+ * su nombre (`encoder_left`, `encoder_right`). El shield crea después
+ * `encoder_left` sin `status`, por lo que nuestro `status = "disabled"` se
+ * mantiene.
+ *
+ * El encoder derecho se define en `lily58_encoders.dtsi` (incluido desde el
+ * keymap); aquí lo activamos en esta mitad.
+ */
+
+/ {
+    encoder_left {
+        status = "disabled";
+    };
+
+    encoder_right {
+        status = "okay";
+    };
+};
