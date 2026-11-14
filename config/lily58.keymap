@@ -12,7 +12,7 @@
  * se nota nada. Subimos la velocidad para que un solo tick ya valga un notch
  * de scroll / ~32 px de movimiento. Hay que definir antes de incluir
  * `pointing.h` (mas abajo), que es quien usa estos valores. */
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 2000
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 300
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 120
 
 #include <behaviors.dtsi>
@@ -64,7 +64,7 @@
         enc_scroll_v: enc_scroll_v {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
             tap-ms = <30>;
         };
 
@@ -78,7 +78,7 @@
         enc_move_v: enc_move_v {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&mmv MOVE_UP>, <&mmv MOVE_DOWN>;
+            bindings = <&mmv MOVE_DOWN>, <&mmv MOVE_UP>;
             tap-ms = <30>;
         };
 
