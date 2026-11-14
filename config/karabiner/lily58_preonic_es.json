@@ -1,0 +1,152 @@
+{
+    "title": "Lily58 + Preonic — símbolos ES en macOS",
+    "rules": [
+        {
+            "description": "Lily58 + Preonic: Option + 4 -> ~",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "4",
+                        "modifiers": {
+                            "mandatory": [
+                                "option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "semicolon",
+                            "modifiers": [
+                                "right_option"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 7504,
+                                    "product_id": 24926
+                                },
+                                {
+                                    "vendor_id": 936,
+                                    "product_id": 42569
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "description": "Lily58 + Preonic: Option + - -> \\",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "hyphen",
+                        "modifiers": {
+                            "mandatory": [
+                                "option"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "non_us_backslash",
+                            "modifiers": [
+                                "right_option"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 7504,
+                                    "product_id": 24926
+                                },
+                                {
+                                    "vendor_id": 936,
+                                    "product_id": 42569
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "description": "Lily58 + Preonic: modalidad es (º ª < >) [grave <-> ISO]",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "grave_accent_and_tilde",
+                        "modifiers": {
+                            "optional": [
+                                "shift",
+                                "caps_lock"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "non_us_backslash"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 7504,
+                                    "product_id": 24926
+                                },
+                                {
+                                    "vendor_id": 936,
+                                    "product_id": 42569
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "non_us_backslash",
+                        "modifiers": {
+                            "optional": [
+                                "shift",
+                                "caps_lock"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "grave_accent_and_tilde"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 7504,
+                                    "product_id": 24926
+                                },
+                                {
+                                    "vendor_id": 936,
+                                    "product_id": 42569
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
