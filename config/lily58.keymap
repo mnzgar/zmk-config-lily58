@@ -33,13 +33,19 @@
             require-prior-idle-ms = <130>;
         };
 
-        /* Capa pegajosa: tap = &to (te quedas en la capa),
+        /* Capa pegajosa: tap = &tog (te quedas en la capa),
          * hold = &mo (solo mientras la mantienes).
-         * Uso: &to_mo <hold>, <tap>  -> ambos son el numero de capa. */
+         * Uso: &to_mo <hold>, <tap>  -> ambos son el numero de capa.
+         *
+         * El tap usa &tog y no &to a proposito: &to desactiva todas las
+         * capas no-base, incluida win_layer, asi que entrar en NUM/NAV
+         * apagaria el modo Windows sin avisar. Con &tog el modo se conserva
+         * y el mismo thumb (que en NUM/NAV queda en &trans) lo vuelve a
+         * apagar. */
         to_mo: to_mo {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            bindings = <&mo>, <&to>;
+            bindings = <&mo>, <&tog>;
             flavor = "balanced";
             tapping-term-ms = <200>;
         };
@@ -99,8 +105,8 @@
 &trans    &kp N1        &kp N2       &kp N3      &kp N4      &kp N5                             &kp N6  &kp N7      &kp N8      &kp N9       &kp N0          &trans
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                              &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
 &kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                              &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
-&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B       &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &mo 5       &to_mo 3 3  &kp SPACE   &kp ENTER  &mo 2   &to_mo 4 4  &trans
+&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B       &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 2
+                                     &trans      &mo 6       &to_mo 4 4  &kp SPACE   &kp ENTER  &mo 3   &to_mo 5 5  &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_VOL_UP C_VOL_DN
@@ -108,20 +114,42 @@
             >;
         };
 
+        /* Modo Windows/Linux: intercambia Ctrl y Gui (Command en macOS) en los
+         * homerow mods, para que Ctrl quede donde esta el Command.
+         *
+         * Es una capa fina por encima de base y por debajo de func/sym/num/nav:
+         * solo define las cuatro teclas que cambian y deja el resto en &trans,
+         * asi que no toca simbolos, numeros ni navegacion.
+         *
+         * Se enciende con WIN (&tog 1) y se apaga con MAC (&to 0), las dos en
+         * system_layer. */
+        win_layer {
+            display-name = "win";
+            bindings = <
+&trans  &trans  &trans      &trans  &trans      &trans                      &trans  &trans      &trans  &trans      &trans  &trans
+&trans  &trans  &trans      &trans  &trans      &trans                      &trans  &trans      &trans  &trans      &trans  &trans
+&trans  &trans  &hm LGUI S  &trans  &hm LCTRL F  &trans                      &trans  &hm RCTRL J  &trans  &hm RGUI L  &trans  &trans
+&trans  &trans  &trans      &trans  &trans      &trans  &trans  &trans      &trans  &trans      &trans  &trans      &trans  &trans
+                                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
         function_layer {
 // ------------------------------------------------------------------------------------------------------------
 // |  F1   |  F2  |  F3  |  F4  |  F5  |  F6  |                  |  F7  |  F8  |  F9  |  F10 |  F11 | F12  |
 // |  TAB  |  Q   |  W   |  E   |  R   |  T   |                  |  Y   |  U   |  I   |  O   |  P   | BSPC |
-// │  ESC  │  A⇧  │  S⌃  │  D⌥  │  F⌘  │  G   │                  │  H   │  J⌘  │  K⌥  │  L⌃  │  Ñ⇧  │  '   │
+// │  ESC  │  ·   │  ·   │  ·   │  ·   │  G   │                  │  H   │  ·   │  ·   │  ·   │  ·   │  '   │
 // | MAYUS |  Z   |  X   |  C   |  V   |  B   |       |  |       |  N   |  M   |  ,   |  .   |      | TOG1 |
 //                       |      |  SYS |  NUM | SPACE |  | ENTER |  SYM |  NAV |      |
+// Los modificadores de la fila central (·) se heredan de base para que el
+// modo win/mac se aplique tambien con func activa.
             display-name = "func";
             bindings = <
 &kp F1    &kp F2        &kp F3       &kp F4      &kp F5      &kp F6                        &kp F7  &kp F8      &kp F9      &kp F10      &kp F11         &kp F12
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                         &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
-&kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                         &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
-&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &trans     &trans     &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &mo 5       &to_mo 3 3  &kp SPACE   &kp ENTER  &mo 2   &to_mo 4 4  &trans
+&kp ESC   &trans         &trans       &trans      &trans      &kp G                         &kp H   &trans      &trans      &trans      &trans          &kp SQT
+&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &trans     &trans     &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 2
+                                     &trans      &mo 6       &to_mo 4 4  &kp SPACE   &kp ENTER  &mo 3   &to_mo 5 5  &trans
             >;
             sensor-bindings = <&enc_scroll_v &enc_scroll_h>;
         };
@@ -140,6 +168,7 @@
 &trans  &kp AT      &kp MINUS  &kp LBKT     &kp LS(FSLH)  &kp RA(N1)                    &kp GRAVE      &kp RA(SQT)   &kp RA(BACKSLASH)  &kp RA(N4)  &kp LS(LBKT)  &trans
 &trans  &kp DOLLAR  &kp RA(E)  &kp PRCNT    &kp RA(N2)    &kp RA(N3)    &trans  &trans  &kp BACKSLASH  &kp RA(LBKT)  &kp RA(RBKT)       &kp RA(N6)  &kp LS(N6)    &trans
                                &trans       &trans        &trans        &trans  &trans  &trans         &trans        &trans
+            >;
         };
 
         num_layer {
@@ -155,7 +184,7 @@
 &trans    &trans      &trans     &trans        &trans       &trans                  &trans      &kp N7  &kp N8  &kp N9  &trans  &kp DEL
 &trans    &kp LS(N7)  &kp SLASH  &kp LS(RBKT)  &kp KP_PLUS  &trans                  &kp COMMA   &kp N4  &kp N5  &kp N6  &trans  &trans
 &trans    &trans      &trans     &trans        &kp LS(N0)   &trans  &trans  &trans  &kp PERIOD  &kp N1  &kp N2  &kp N3  &kp N0  &trans
-                                 &trans        &trans       &to 0   &trans  &trans  &trans      &trans  &trans
+                                 &trans        &trans       &trans  &trans  &trans  &trans      &trans  &trans
             >;
         };
 
@@ -172,21 +201,21 @@
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &kp UP    &trans     &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp HOME  &kp END   &kp PG_UP  &kp PG_DN  &trans
-                                &trans  &trans  &trans  &trans    &trans  &trans    &to 0   &trans
+                                &trans  &trans  &trans  &trans    &trans  &trans    &trans  &trans
             >;
             sensor-bindings = <&enc_move_v &enc_move_h>;
         };
 
         system_layer {
 // ------------------------------------------------------------------------------------------------------------
-// |       |     |     |     |     |     |                  |     |     |     |     |            |     |
+// |       |     |     |     |     |     |                  | WIN | MAC |     |     |            |     |
 // | BTCLR | BT1 | BT2 | BT3 | BT4 | BT5 |                  |     |     |     |     | ZMK_STUDIO |     |
 // |       |     |     |     |     |     |                  |     |     |     |     |            |     |
 // |       |     |     |     |     |     |       |  |       |     |     |     |     |            |     |
 //                     |     |     |     |       |  |       |     |     |     |
             display-name = "system";
             bindings = <
-&trans      &trans        &trans        &trans        &trans        &trans                        &trans  &trans  &trans  &trans  &trans          &trans
+&trans      &trans        &trans        &trans        &trans        &trans                        &tog 1  &to 0   &trans  &trans  &trans          &trans
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &trans  &trans  &trans  &trans  &studio_unlock  &trans
 &trans      &trans        &trans        &trans        &trans        &trans                        &trans  &trans  &trans  &trans  &trans          &trans
 &trans      &trans        &trans        &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans
