@@ -42,14 +42,14 @@
 // |  TAB  |  Q  |  W  |  E  |  R  |  T  |                  |  Y  |  U  |  I  |  O  |  P  | BSPC |
 // │  ESC  │  A⇧ │  S⌃ │  D⌥ │  F⌘ │  G  │                  │  H  │  J⌘ │  K⌥ │  L⌃ │  Ñ⇧ │  '   │
 // | MAYUS |  Z  |  X  |  C  |  V  |  B  | MUTE  |  |  ▶⏸   |  N  |  M  |  ,  |  .  |     | TOG1 |
-//                     |     | NAV | NUM | SPACE |  | ENTER | SYM |     |     |
+//                     |     | SYS | NUM | SPACE |  | ENTER | SYM | NAV |     |
             display-name = "base";
             bindings = <
-&trans    &kp N1        &kp N2       &kp N3      &kp N4      &kp N5                         &kp N6  &kp N7      &kp N8      &kp N9       &kp N0          &trans
-&kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                          &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
-&kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                          &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
-&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &to_mo 4 4   &to_mo 3 3   &kp SPACE   &kp ENTER   &mo 2   &trans      &trans
+&trans    &kp N1        &kp N2       &kp N3      &kp N4      &kp N5                             &kp N6  &kp N7      &kp N8      &kp N9       &kp N0          &trans
+&kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                              &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
+&kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                              &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
+&kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B       &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
+                                     &trans      &mo 5       &to_mo 3 3  &kp SPACE   &kp ENTER  &mo 2   &to_mo 4 4  &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_VOL_UP C_VOL_DN
@@ -63,14 +63,14 @@
 // |  TAB  |  Q   |  W   |  E   |  R   |  T   |                  |  Y   |  U   |  I   |  O   |  P   | BSPC |
 // │  ESC  │  A⇧  │  S⌃  │  D⌥  │  F⌘  │  G   │                  │  H   │  J⌘  │  K⌥  │  L⌃  │  Ñ⇧  │  '   │
 // | MAYUS |  Z   |  X   |  C   |  V   |  B   |       |  |       |  N   |  M   |  ,   |  .   |      | TOG1 |
-//                       |      |  NAV |  NUM | SPACE |  | ENTER |  SYM |      |      |
+//                       |      |  SYS |  NUM | SPACE |  | ENTER |  SYM |  NAV |      |
             display-name = "func";
             bindings = <
 &kp F1    &kp F2        &kp F3       &kp F4      &kp F5      &kp F6                        &kp F7  &kp F8      &kp F9      &kp F10      &kp F11         &kp F12
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                         &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
 &kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                         &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &trans     &trans     &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &to_mo 4 4   &to_mo 3 3   &kp SPACE   &kp ENTER   &mo 2   &trans      &trans
+                                     &trans      &mo 5       &to_mo 3 3  &kp SPACE   &kp ENTER  &mo 2   &to_mo 4 4  &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_NEXT C_PREV
@@ -92,11 +92,6 @@
 &trans  &kp AT      &kp MINUS  &kp LBKT     &kp LS(FSLH)  &kp RA(N1)                    &kp GRAVE      &kp RA(SQT)   &kp RA(BACKSLASH)  &kp RA(N4)  &kp LS(LBKT)  &trans
 &trans  &kp DOLLAR  &kp RA(E)  &kp PRCNT    &kp RA(N2)    &kp RA(N3)    &trans  &trans  &kp BACKSLASH  &kp RA(LBKT)  &kp RA(RBKT)       &kp RA(N6)  &kp LS(N6)    &trans
                                &trans       &trans        &trans        &trans  &trans  &trans         &trans        &trans
-            >;
-            sensor-bindings = <
-                &inc_dec_kp C_NEXT C_PREV
-                &inc_dec_kp C_VOL_UP C_VOL_DN
-            >;
         };
 
         num_layer {
@@ -113,10 +108,6 @@
 &trans    &kp LS(N7)  &kp SLASH  &kp LS(RBKT)  &kp KP_PLUS  &trans                  &kp COMMA   &kp N4  &kp N5  &kp N6  &trans  &trans
 &trans    &trans      &trans     &trans        &kp LS(N0)   &trans  &trans  &trans  &kp PERIOD  &kp N1  &kp N2  &kp N3  &kp N0  &trans
                                  &trans        &trans       &to 0   &trans  &trans  &trans      &trans  &trans
-            >;
-            sensor-bindings = <
-                &inc_dec_kp C_NEXT C_PREV
-                &inc_dec_kp C_VOL_UP C_VOL_DN
             >;
         };
 
@@ -156,10 +147,5 @@
 &trans      &trans        &trans        &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans
                                         &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans
             >;
-        sensor-bindings = <
-                &inc_dec_kp C_NEXT C_PREV
-                &inc_dec_kp C_VOL_UP C_VOL_DN
-            >;
-        };
     };
 };
