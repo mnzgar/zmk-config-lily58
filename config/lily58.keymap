@@ -20,6 +20,17 @@
             quick-tap-ms = <200>;
             require-prior-idle-ms = <130>;
         };
+
+        /* Capa pegajosa: tap = &to (te quedas en la capa),
+         * hold = &mo (solo mientras la mantienes).
+         * Uso: &to_mo <hold>, <tap>  -> ambos son el numero de capa. */
+        to_mo: to_mo {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&mo>, <&to>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+        };
     };
 
     keymap {
@@ -31,14 +42,14 @@
 // |  TAB  |  Q  |  W  |  E  |  R  |  T  |                  |  Y  |  U  |  I  |  O  |  P  | BSPC |
 // │  ESC  │  A⇧ │  S⌃ │  D⌥ │  F⌘ │  G  │                  │  H  │  J⌘ │  K⌥ │  L⌃ │  Ñ⇧ │  '   │
 // | MAYUS |  Z  |  X  |  C  |  V  |  B  | MUTE  |  |  ▶⏸   |  N  |  M  |  ,  |  .  |     | TOG1 |
-//                     |     | MO5 | MO3 | SPACE |  | ENTER | MO2 | MO4 |     |
+//                     |     | NAV | NUM | SPACE |  | ENTER | SYM |     |     |
             display-name = "base";
             bindings = <
 &trans    &kp N1        &kp N2       &kp N3      &kp N4      &kp N5                         &kp N6  &kp N7      &kp N8      &kp N9       &kp N0          &trans
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                          &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
 &kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                          &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &kp C_MUTE  &kp C_PP   &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &trans      &mo 3   &kp SPACE   &kp ENTER  &mo 2   &trans      &trans
+                                     &trans      &to_mo 4 4   &to_mo 3 3   &kp SPACE   &kp ENTER   &mo 2   &trans      &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_VOL_UP C_VOL_DN
@@ -52,14 +63,14 @@
 // |  TAB  |  Q   |  W   |  E   |  R   |  T   |                  |  Y   |  U   |  I   |  O   |  P   | BSPC |
 // │  ESC  │  A⇧  │  S⌃  │  D⌥  │  F⌘  │  G   │                  │  H   │  J⌘  │  K⌥  │  L⌃  │  Ñ⇧  │  '   │
 // | MAYUS |  Z   |  X   |  C   |  V   |  B   |       |  |       |  N   |  M   |  ,   |  .   |      | TOG1 |
-//                       |      |  MO5 |  MO3 | SPACE |  | ENTER |  MO2 |  MO4 |      |
+//                       |      |  NAV |  NUM | SPACE |  | ENTER |  SYM |      |      |
             display-name = "func";
             bindings = <
 &kp F1    &kp F2        &kp F3       &kp F4      &kp F5      &kp F6                        &kp F7  &kp F8      &kp F9      &kp F10      &kp F11         &kp F12
 &kp TAB   &kp Q         &kp W        &kp E       &kp R       &kp T                         &kp Y   &kp U       &kp I       &kp O        &kp P           &kp BSPC
 &kp ESC   &hm LSHIFT A  &hm LCTRL S  &hm LALT D  &hm LGUI F  &kp G                         &kp H   &hm RGUI J  &hm RALT K  &hm RCTRL L  &hm RSHFT SEMI  &kp SQT
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &trans     &trans     &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
-                                     &trans      &trans      &mo 3   &kp SPACE  &kp ENTER  &mo 2   &trans      &trans
+                                     &trans      &to_mo 4 4   &to_mo 3 3   &kp SPACE   &kp ENTER   &mo 2   &trans      &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_NEXT C_PREV
@@ -101,7 +112,7 @@
 &trans    &trans      &trans     &trans        &trans       &trans                  &trans      &kp N7  &kp N8  &kp N9  &trans  &kp DEL
 &trans    &kp LS(N7)  &kp SLASH  &kp LS(RBKT)  &kp KP_PLUS  &trans                  &kp COMMA   &kp N4  &kp N5  &kp N6  &trans  &trans
 &trans    &trans      &trans     &trans        &kp LS(N0)   &trans  &trans  &trans  &kp PERIOD  &kp N1  &kp N2  &kp N3  &kp N0  &trans
-                                 &trans        &trans       &trans  &trans  &trans  &trans      &trans  &trans
+                                 &trans        &trans       &to 0   &trans  &trans  &trans      &trans  &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_NEXT C_PREV
@@ -122,7 +133,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &kp UP    &trans     &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp HOME  &kp END   &kp PG_UP  &kp PG_DN  &trans
-                                &trans  &trans  &trans  &trans    &trans  &trans    &trans    &trans
+                                &trans  &to 0   &trans  &trans    &trans  &trans    &trans    &trans
             >;
             sensor-bindings = <
                 &inc_dec_kp C_NEXT C_PREV
