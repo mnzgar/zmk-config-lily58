@@ -128,11 +128,11 @@
         win_layer {
             display-name = "win";
             bindings = <
-&trans  &trans  &trans      &trans  &trans      &trans                      &trans  &trans      &trans  &trans      &trans  &trans
-&trans  &trans  &trans      &trans  &trans      &trans                      &trans  &trans      &trans  &trans      &trans  &trans
-&trans  &trans  &hm LGUI S  &trans  &hm LCTRL F  &trans                      &trans  &hm RCTRL J  &trans  &hm RGUI L  &trans  &trans
-&trans  &trans  &trans      &trans  &trans      &trans  &trans  &trans      &trans  &trans      &trans  &trans      &trans  &trans
-                                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans      &trans  &trans       &trans                  &trans  &trans       &trans  &trans      &trans  &trans
+&trans  &trans  &trans      &trans  &trans       &trans                  &trans  &trans       &trans  &trans      &trans  &trans
+&trans  &trans  &hm LGUI S  &trans  &hm LCTRL F  &trans                  &trans  &hm RCTRL J  &trans  &hm RGUI L  &trans  &trans
+&trans  &trans  &trans      &trans  &trans       &trans  &trans  &trans  &trans  &trans       &trans  &trans      &trans  &trans
+                            &trans  &trans       &trans  &trans  &trans  &trans  &trans       &trans
             >;
         };
 
@@ -210,16 +210,16 @@
 
         system_layer {
 // ------------------------------------------------------------------------------------------------------------
-// |       |     |     |     |     |     |                  | WIN | MAC |     |     |            |     |
-// | BTCLR | BT1 | BT2 | BT3 | BT4 | BT5 |                  |     |     |     |     | ZMK_STUDIO |     |
 // |       |     |     |     |     |     |                  |     |     |     |     |            |     |
+// | BTCLR | BT1 | BT2 | BT3 | BT4 | BT5 |                  |     |     |     |     | ZMK_STUDIO |     |
+// |       |     |     |     |     |     |                  | MAC | WIN |     |     |            |     |
 // |       |     |     |     |     |     |       |  |       |     |     |     |     |            |     |
 //                     |     |     |     |       |  |       |     |     |     |
             display-name = "system";
             bindings = <
-&trans      &trans        &trans        &trans        &trans        &trans                        &tog 1  &to 0   &trans  &trans  &trans          &trans
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &trans  &trans  &trans  &trans  &studio_unlock  &trans
 &trans      &trans        &trans        &trans        &trans        &trans                        &trans  &trans  &trans  &trans  &trans          &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &trans  &trans  &trans  &trans  &studio_unlock  &trans
+&trans      &trans        &trans        &trans        &trans        &trans                        &tog 1  &to 0   &trans  &trans  &trans          &trans
 &trans      &trans        &trans        &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans
                                         &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans
             >;
