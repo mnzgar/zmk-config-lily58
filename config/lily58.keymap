@@ -4,9 +4,21 @@
  * SPDX-License-Identifier: MIT
  */
 
+/* Velocidad del raton/scroll para los encoders.
+ *
+ * ZMK mueve `velocidad * trigger-period-ms / 1000` por cada tick de 16 ms.
+ * Con los valores por defecto (MOVE 600, SCRL 10) un detent del encoder, que
+ * solo se mantiene pulsado unas decenas de ms, mueve menos de 1 unidad y no
+ * se nota nada. Subimos la velocidad para que un solo tick ya valga un notch
+ * de scroll / ~32 px de movimiento. Hay que definir antes de incluir
+ * `pointing.h` (mas abajo), que es quien usa estos valores. */
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 2000
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 120
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/pointing.h>
 #include "lily58_encoders.dtsi"
 
 / {
@@ -30,6 +42,45 @@
             bindings = <&mo>, <&to>;
             flavor = "balanced";
             tapping-term-ms = <200>;
+        };
+
+        /* Encoders como raton.
+         *
+         * `zmk,behavior-sensor-rotate` es el unico tipo de behavior que vale
+         * en `sensor-bindings`. El primer binding es el giro horario (CW) y el
+         * segundo el antihorario (CCW); CW va hacia el eje positivo: arriba en
+         * vertical y derecha en horizontal.
+         *
+         * `tap-ms` es lo que se mantiene pulsado el binding por cada detent:
+         * tiene que pasar de los 16 ms del tick de `&msc`/`&mmv`
+         * (trigger-period-ms) para que se emita al menos un evento, y quedarse
+         * por debajo de 32 ms para que no se emitan dos. */
+        enc_scroll_v: enc_scroll_v {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <30>;
+        };
+
+        enc_scroll_h: enc_scroll_h {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_RIGHT>, <&msc SCRL_LEFT>;
+            tap-ms = <30>;
+        };
+
+        enc_move_v: enc_move_v {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&mmv MOVE_UP>, <&mmv MOVE_DOWN>;
+            tap-ms = <30>;
+        };
+
+        enc_move_h: enc_move_h {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&mmv MOVE_RIGHT>, <&mmv MOVE_LEFT>;
+            tap-ms = <30>;
         };
     };
 
@@ -72,10 +123,7 @@
 &kp CAPS  &kp Z         &kp X        &kp C       &kp V       &kp B   &trans     &trans     &kp N   &kp M       &kp COMMA   &kp DOT      &trans          &tog 1
                                      &trans      &mo 5       &to_mo 3 3  &kp SPACE   &kp ENTER  &mo 2   &to_mo 4 4  &trans
             >;
-            sensor-bindings = <
-                &inc_dec_kp C_NEXT C_PREV
-                &inc_dec_kp C_VOL_UP C_VOL_DN
-            >;
+            sensor-bindings = <&enc_scroll_v &enc_scroll_h>;
         };
 
         sym_layer {
@@ -124,12 +172,9 @@
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &kp UP    &trans     &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans                    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp HOME  &kp END   &kp PG_UP  &kp PG_DN  &trans
-                                &trans  &to 0   &trans  &trans    &trans  &trans    &trans    &trans
+                                &trans  &trans  &trans  &trans    &trans  &trans    &to 0   &trans
             >;
-            sensor-bindings = <
-                &inc_dec_kp C_NEXT C_PREV
-                &inc_dec_kp C_VOL_UP C_VOL_DN
-            >;
+            sensor-bindings = <&enc_move_v &enc_move_h>;
         };
 
         system_layer {
@@ -147,5 +192,13 @@
 &trans      &trans        &trans        &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans
                                         &trans        &trans        &trans        &trans  &trans  &trans  &trans  &trans
             >;
+        };
     };
+};
+
+/* Para los encoders queremos velocidad constante: con aceleracion cada tick
+ * del primer tramo mueve mucho menos que el maximo y el detent se queda
+ * practicamente quieto. `&msc` ya usa exponente 0. */
+&mmv {
+    acceleration-exponent = <0>;
 };
